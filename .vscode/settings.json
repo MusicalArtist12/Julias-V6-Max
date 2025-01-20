@@ -10,6 +10,7 @@
         "**/*.uf2": true
     },
     "files.associations": {
+        "*.bC": "c",
         "*.h": "c",
         "*.c": "c",
         "*.inc": "c",
@@ -18,7 +19,10 @@
         "xstddef": "c",
         "type_traits": "c",
         "utility": "c",
-        "ranges": "c"
+        "ranges": "c",
+        "bitset": "c",
+        "string_view": "c",
+        "regex": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,

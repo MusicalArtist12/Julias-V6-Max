@@ -1,5 +1,7 @@
 {
+    "keyboard_name": "Keychron V6 Max",
      "usb": {
+        "vid": "0x3434",
         "pid": "0x0960",
         "device_version": "1.0.0"
     },

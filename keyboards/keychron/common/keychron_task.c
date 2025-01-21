@@ -61,7 +61,7 @@ bool rgb_matrix_indicators_keychron(void) {
     rgb_matrix_indicators_bt();
 #    endif
 #    ifdef FACTORY_TEST_ENABLE
-    factory_test_indicator();
+     // factory_test_indicator();
 #    endif
     return true;
 }

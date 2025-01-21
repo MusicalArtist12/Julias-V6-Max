@@ -22,7 +22,8 @@
         "ranges": "c",
         "bitset": "c",
         "string_view": "c",
-        "regex": "c"
+        "regex": "c",
+        "cstdint": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,

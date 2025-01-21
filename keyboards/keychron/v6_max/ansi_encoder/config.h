@@ -43,12 +43,22 @@
 #    define RGB_MATRIX_BRIGHTNESS_TURN_OFF_VAL 32
 
 /* Indications */
-#    define NUM_LOCK_INDEX 37
-#    define CAPS_LOCK_INDEX 61
+
+// Disable default backlight when these are enabled since we're lighting up their respective lights instead
+// #    define NUM_LOCK_INDEX 37
+// #    define CAPS_LOCK_INDEX 61
 #    define LOW_BAT_IND_INDEX \
         { 97 }
 
 #    define RGB_MATRIX_KEYPRESSES
 #    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
+
+#    define RGB_MATRIX_DEFAULT_ON true
+#    define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_SOLID_COLOR
+
+#    define RGB_MATRIX_DEFAULT_HUE 216
+#    define RGB_MATRIX_DEFAULT_SAT 255
+#    define RGB_MATRIX_DEFAULT_VAL 255
+
 
 #endif

@@ -47,18 +47,24 @@
 // Disable default backlight when these are enabled since we're lighting up their respective lights instead
 // #    define NUM_LOCK_INDEX 37
 // #    define CAPS_LOCK_INDEX 61
+
 #    define LOW_BAT_IND_INDEX \
         { 97 }
 
 #    define RGB_MATRIX_KEYPRESSES
 #    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 
+// default to on
 #    define RGB_MATRIX_DEFAULT_ON true
 #    define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_SOLID_COLOR
 
+// the julia purple
 #    define RGB_MATRIX_DEFAULT_HUE 216
 #    define RGB_MATRIX_DEFAULT_SAT 255
 #    define RGB_MATRIX_DEFAULT_VAL 255
 
-
 #endif
+
+
+#define DEBOUNCE 5
+#define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD

@@ -1,1 +1,2 @@
-# This file intentionally left blank
+DEBOUNCE_TYPE = sym_defer_pk
+CAPS_WORD_ENABLE = yes

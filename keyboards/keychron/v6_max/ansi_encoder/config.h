@@ -66,5 +66,5 @@
 #endif
 
 
-#define DEBOUNCE 5
+#define DEBOUNCE 20
 #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD

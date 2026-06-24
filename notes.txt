@@ -1,0 +1,6 @@
+https://docs.qmk.fm/newbs_getting_started
+
+nix-shell
+
+qmk compile -kb keychron/v6_max/ansi_encoder -km via
+qmk flash -kb keychron/v6_max/ansi_encoder -km via

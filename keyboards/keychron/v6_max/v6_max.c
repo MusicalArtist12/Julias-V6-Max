@@ -16,10 +16,12 @@
 
 #include "quantum.h"
 #include "keychron_task.h"
+
 #ifdef FACTORY_TEST_ENABLE
 #    include "factory_test.h"
 #    include "keychron_common.h"
 #endif
+
 #ifdef LK_WIRELESS_ENABLE
 #    include "lkbt51.h"
 #    include "wireless.h"

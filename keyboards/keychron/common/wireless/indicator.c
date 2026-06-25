@@ -339,7 +339,7 @@ static void indicator_timer_cb(void *arg) {
             }
         }
 #endif
-        
+
         if ((indicator_config.value & LED_ON) && !time_up) {
             if (led_lin_list) writePin(led_lin_list[idx], HOST_LED_PIN_ON_STATE);
 #    if defined(COMMON_BT_LED_PIN) || defined(COMMON_P24G_LED_PIN)
@@ -351,7 +351,7 @@ static void indicator_timer_cb(void *arg) {
             if (led_pin != NO_PIN) writePin(led_pin, !COMMON_BT_LED_PIN_ON_STATE);
 #    endif
         }
-        
+
     }
 #endif
 
@@ -598,6 +598,10 @@ void indicator_battery_low(void) {
 #endif
 }
 
+
+__attribute__((weak)) void indicator_task_user(void) {}
+
+
 void indicator_task(void) {
 #if defined(BAT_LEVEL_LED_LIST)
     bat_level_animiation_task();
@@ -608,6 +612,8 @@ void indicator_task(void) {
     }
 
     indicator_battery_low();
+
+    indicator_task_user();
 }
 
 #if defined(LED_MATRIX_ENABLE) || defined(RGB_MATRIX_ENABLE)

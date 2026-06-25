@@ -62,6 +62,7 @@ static uint8_t  critical_low             = 0;
 static uint8_t  bat_state;
 static uint8_t  power_on_sample = 0;
 
+
 void battery_init(void) {
     bat_state = BAT_NOT_CHARGING;
 #if defined(BAT_CHARGING_PIN)
@@ -190,7 +191,10 @@ bool battery_power_on_sample(void) {
 
 void battery_task(void) {
     uint32_t t = rtc_timer_elapsed_ms(bat_monitor_timer_buffer);
-    if ((get_transport() & TRANSPORT_WIRELESS) && (wireless_get_state() == WT_CONNECTED || battery_power_on_sample())) {
+    if (
+            (get_transport() & TRANSPORT_WIRELESS)
+            && (wireless_get_state() == WT_CONNECTED || battery_power_on_sample())
+        ) {
 #if defined(BAT_CHARGING_PIN)
         if (usb_power_connected() && t > VOLTAGE_MEASURE_INTERVAL) {
             if (readPin(BAT_CHARGING_PIN) == BAT_CHARGING_LEVEL)
@@ -200,12 +204,16 @@ void battery_task(void) {
         }
 #endif
 
-        if ((battery_power_on_sample()
+        if (
+            (
+                battery_power_on_sample()
 #if defined(LED_MATRIX_ENABLE) || defined(RGB_MATRIX_ENABLE)
-             && !indicator_is_enabled()
+                && !indicator_is_enabled()
 #endif
-             && t > BACKLIGHT_OFF_VOLTAGE_MEASURE_INTERVAL) ||
-            t > VOLTAGE_MEASURE_INTERVAL) {
+                && t > BACKLIGHT_OFF_VOLTAGE_MEASURE_INTERVAL
+            )
+            || t > VOLTAGE_MEASURE_INTERVAL
+        ) {
 
             battery_check_empty();
             battery_check_critical_low();
@@ -218,6 +226,8 @@ void battery_task(void) {
 
             battery_measure();
             if (power_on_sample < VOLTAGE_POWER_ON_MEASURE_COUNT) power_on_sample++;
+
+
         }
     }
 

@@ -112,3 +112,4 @@ bool indicator_is_running(void);
 void indicator_battery_low_enable(bool enable);
 
 void indicator_task(void);
+void indicator_task_user(void);

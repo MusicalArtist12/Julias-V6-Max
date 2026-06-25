@@ -76,6 +76,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 
+
 #ifdef RGB_MATRIX_ENABLE
 
 #define LED_FLAG_BATT 0x08
@@ -83,11 +84,35 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #define LED_FLAG_NUMPAD 0x02
 
 
+#define MAX_BATT_INDICATOR_LEDS 10
+uint8_t batt_leds[MAX_BATT_INDICATOR_LEDS] = {};
+uint8_t batt_led_count = 0;
+
+
+
+// set states for caps lock indicator and num lock indicator
+// see via/keymap.c
+
+#define LED_FLAG_BATT 0x08
+#define LED_FLAG_ALPHA 0x04
+#define LED_FLAG_NUMPAD 0x02
+
+
+uint8_t led_flags[] = {
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,    1, 1, 1, 1, 1, 1, 1,
+    1, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 2, 2, 2,
+    1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1,             2, 2, 2, 1,
+    1,    4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1,       1,    2, 2, 2,
+    1, 1, 1,          1,          1, 1, 1, 1, 1, 1, 1, 2,    2, 1
+};
+
+
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     // set alpha to green for caps lock
     if (host_keyboard_led_state().caps_lock || is_caps_word_on()) {
         for (uint8_t i = led_min; i < led_max; i++) {
-            if (g_led_config.flags[i] & LED_FLAG_ALPHA) {
+            if (led_flags[i] & LED_FLAG_ALPHA) {
                 rgb_matrix_set_color(i, RGB_GREEN);
             }
         }
@@ -96,16 +121,46 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     // set num keys to green for num lock
     if (host_keyboard_led_state().num_lock) {
         for (uint8_t i = led_min; i < led_max; i++) {
-            if (g_led_config.flags[i] & LED_FLAG_NUMPAD) {
+            if (led_flags[i] & LED_FLAG_NUMPAD) {
                 rgb_matrix_set_color(i, RGB_GREEN);
             }
         }
     }
 
+
+
     return false;
 }
 
+void keyboard_post_init_user() {
+
+    for (uint8_t i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
+        if (led_flags[i] & LED_FLAG_BATT) {
+            if (batt_led_count < MAX_BATT_INDICATOR_LEDS) {
+                batt_leds[batt_led_count] = i;
+                batt_led_count += 1;
+            }
+
+        }
+    }
+}
+
+void indicator_task_user(void) {
+    uint8_t level = battery_get_percentage();
+    uint8_t count = 0;
+    uint8_t lvl = ((uint16_t)level * (uint16_t)batt_led_count) / 100;
+
+    for (uint8_t i = 0; i < batt_led_count; i++) {
+        if (count < lvl) {
+            rgb_matrix_set_color(batt_leds[i], RGB_WHITE);
+            count += 1;
+        }
+        else {
+            rgb_matrix_set_color(batt_leds[i], 0, 0, 0);
+        }
 
 
+    }
+}
 
 #endif
